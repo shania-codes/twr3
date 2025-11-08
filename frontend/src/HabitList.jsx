@@ -1,6 +1,23 @@
 import React from "react"
 
-const HabitList = ({habits}) => {
+
+const HabitList = ({habits, updateHabit, updateCallback}) => {
+    const onDelete = async (id) => {
+        try {
+            const options = {
+                method: "POST"
+            }
+            const response = await fetch(`/api/delete_habit/${id}`, options)
+            if (response.status === 200) {
+                updateCallback()
+            } else {
+                console.error("Failed to delete")
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     return <div>
         <h2>Habits</h2>
         <table>
@@ -17,8 +34,8 @@ const HabitList = ({habits}) => {
                         <td>{habit.name}</td>
                         <td>{habit.description}</td>
                         <td>
-                            <button>Update</button>
-                            <button>Delete</button>
+                            <button onClick={() => updateHabit(habit)}>Update</button>
+                            <button onClick={() => onDelete(habit.id)} >Delete</button>
                         </td>
                     </tr>
                 ))}

@@ -8,6 +8,14 @@ function App(props) {
   //const [activeSection, setActiveSection] = useState("dashboard");
   const [habits, setHabits] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentHabit, setCurrentHabit] = useState({})
+  
+
+  useEffect(() => {
+    fetchTime()
+    fetchHabits()
+  }, []);
+
 
   const fetchHabits = async () => {
     const response = await fetch("/api/get_all_habits")
@@ -19,19 +27,43 @@ function App(props) {
     const time = await fetch("/api/time").then(res => res.json()).then(data => {setCurrentTime(data.time);})
   }
 
-  useEffect(() => {
-    fetchTime()
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setCurrentHabit({})
+  }
+
+  const openCreateModal = () => {
+    if (!isModalOpen) setIsModalOpen(true)
+  }
+
+  const openEditModal = (habit) => {
+    if (isModalOpen) return
+    setCurrentHabit(habit)
+    setIsModalOpen(true)
+  }
+
+  const onUpdate = () => {
+    closeModal()
     fetchHabits()
-  }, []); // if any variables in [] change it will rerun this to update but since it's empty this will only run once
+  }
 
   return (
     <>
       <h1>Welcom to Habit Grid {props.user}</h1>
       <p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>
-      <br></br>
 
-      <HabitList habits={habits} />
-      <HabitForm />
+      <HabitList habits={habits} updateHabit={openEditModal} updateCallback={onUpdate} />
+      <button onClick={openCreateModal}>Create New Habit</button>
+
+      { isModalOpen && <div className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={closeModal}>&times;</span>
+          <HabitForm existingHabit={currentHabit} updateCallback={onUpdate} />
+        </div>
+      </div>
+      }
+
+      
 
       {/* TWR Dashboard for all "apps" */}
       {/* <dashboard>

@@ -66,7 +66,7 @@ def get_all_habits():
     return jsonify({"habits":json_habits})
 
 ### Update
-@app.route("/api/update_habit/<int:habit_id>", methods=["PATCH"]) # Post?
+@app.route("/api/update_habit/<int:habit_id>", methods=["POST"])
 def update_habit(habit_id):
     habit = Habits.query.get(habit_id)
 
@@ -82,17 +82,17 @@ def update_habit(habit_id):
     return jsonify({"message":"Habit updated"}), 200 # OK
 
 ### Delete
-@app.route("/api/delete_habit/<int:habit_id>", methods=["DELETE"]) # Post?
+@app.route("/api/delete_habit/<int:habit_id>", methods=["POST"])
 def delete_habit(habit_id):
     habit = Habits.query.get(habit_id)
 
     if not habit:
         return jsonify({"message": "User not found"}), 404 # Not found
 
-        db.session.delete(habit)
-        db.session.commit()
+    db.session.delete(habit)
+    db.session.commit()
 
-        return jsonify({"message":"Habit deleted"}), 200 # OK
+    return jsonify({"message":"Habit deleted"}), 200 # OK
 
 
 ## Template

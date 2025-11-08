@@ -1,8 +1,10 @@
 import {useState} from "react"
 
-const HabitForm = ({}) => {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
+const HabitForm = ({existingHabit = {}, updateCallback}) => {
+    const [name, setName] = useState(existingHabit.name || "");
+    const [description, setDescription] = useState(existingHabit.description || "");
+
+    const updating = Object.entries(existingHabit).length !== 0
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -11,7 +13,7 @@ const HabitForm = ({}) => {
             name,
             description,
         }
-        const url = "/api/new_habit"
+        const url = "/api/" + (updating ? `update_habit/${existingHabit.id}` : "new_habit")
         const options = {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -22,7 +24,7 @@ const HabitForm = ({}) => {
             const message = await response.json()
             alert(message.message)
         } else {
-            // Successful
+            updateCallback()
         }
     }
 
@@ -35,7 +37,7 @@ const HabitForm = ({}) => {
             <label htmlFor="description">Description:</label>
             <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></input>   
         </div>
-        <button type="submit">Create Habit</button>
+        <button type="submit">{updating ? "Update Habit" : "Create Habit"}</button>
     </form>
 
 }
