@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react'
 import HabitList from "./HabitList"
+import HabitForm from "./HabitForm"
+
+
 function App(props) {
   const [currentTime, setCurrentTime] = useState(0);
-  const [activeSection, setActiveSection] = useState("dashboard");
+  //const [activeSection, setActiveSection] = useState("dashboard");
   const [habits, setHabits] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchHabits = async () => {
-    const response = await fetch("http://localhost:5000/api/get_all_habits")
+    const response = await fetch("/api/get_all_habits")
     const data = await response.json()
     setHabits(data.habits)
-    //console.log(data.habits)
+  }
+
+  const fetchTime = async () => {
+    const time = await fetch("/api/time").then(res => res.json()).then(data => {setCurrentTime(data.time);})
   }
 
   useEffect(() => {
-    fetch("/api/time")
-    .then(res => res.json()) // res contains json response from flask
-    .then(data => {
-      setCurrentTime(data.time);
-    }) 
-
+    fetchTime()
     fetchHabits()
   }, []); // if any variables in [] change it will rerun this to update but since it's empty this will only run once
 
@@ -29,6 +31,7 @@ function App(props) {
       <br></br>
 
       <HabitList habits={habits} />
+      <HabitForm />
 
       {/* TWR Dashboard for all "apps" */}
       {/* <dashboard>

@@ -49,7 +49,7 @@ def new_habit():
     if not name:
         return jsonify({"message":"You must include a name"}), 400 # Bad request
 
-    new_habit = Habit(name=name, description=description)
+    new_habit = Habits(name=name, description=description)
     try:
         db.session.add(new_habit)
         db.session.commit()
@@ -68,7 +68,7 @@ def get_all_habits():
 ### Update
 @app.route("/api/update_habit/<int:habit_id>", methods=["PATCH"]) # Post?
 def update_habit(habit_id):
-    habit = Habit.query.get(habit_id)
+    habit = Habits.query.get(habit_id)
 
     if not habit:
         return jsonify({"message": "User not found"}), 404 # Not found
@@ -84,7 +84,7 @@ def update_habit(habit_id):
 ### Delete
 @app.route("/api/delete_habit/<int:habit_id>", methods=["DELETE"]) # Post?
 def delete_habit(habit_id):
-    habit = Habit.query.get(habit_id)
+    habit = Habits.query.get(habit_id)
 
     if not habit:
         return jsonify({"message": "User not found"}), 404 # Not found
