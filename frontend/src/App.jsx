@@ -19,7 +19,8 @@ function App(props) {
       <p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>
       <br></br>
 
-      <dashboard>
+      {/* TWR Dashboard for all "apps" */}
+      {/* <dashboard>
         <featurebutton className=""> 
           <img src="./public/habits.png"></img>Habits
         </featurebutton>
@@ -29,7 +30,7 @@ function App(props) {
         <featurebutton> 
           <img src="./public/settings.png"></img>Settings
         </featurebutton>
-      </dashboard>
+      </dashboard> */}
 
     </>
   )
