@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+
+function App(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [activeSection, setActiveSection] = useState("dashboard");
 
@@ -15,19 +15,19 @@ function App() {
 
   return (
     <>
-      <h1>Habit Grid</h1>
+      <h1>Welcom to Habit Grid {props.user}</h1>
       <p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>
       <br></br>
 
-      <dashboard className="grid grid-cold-3 gap-4">
+      <dashboard>
         <featurebutton className=""> 
           <img src="./public/habits.png"></img>Habits
         </featurebutton>
         <featurebutton> 
-          <img src="./instance/"></img>Stats
+          <img src="./public/charts.jpg"></img>Stats
         </featurebutton>
         <featurebutton> 
-          <img src="./instance/"></img>Settings
+          <img src="./public/settings.png"></img>Settings
         </featurebutton>
       </dashboard>
 
