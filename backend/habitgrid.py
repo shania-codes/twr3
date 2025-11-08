@@ -59,7 +59,7 @@ def new_habit():
     return jsonify({"message":"Habit saved"}), 201 # Created
 
 ### Read
-@app.route("/api/all_habits")
+@app.route("/api/get_all_habits")
 def get_all_habits():
     habits = Habits.query.all()
     json_habits = list(map(lambda habit: habit.tojson(), habits))
