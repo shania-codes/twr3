@@ -59,6 +59,7 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
             {days.map((d) => (
               <th key={d}>{d.slice(5)}</th>
             ))}
+            <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -83,6 +84,7 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
                   </td>
                 );
               })}
+              <td>{h.description}</td>
               <td>
                 <button onClick={() => updateHabit(h)}>Edit</button>
                 <button onClick={() => onDelete(h.id)}>Delete</button>
