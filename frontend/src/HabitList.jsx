@@ -51,26 +51,27 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
 
     return (
     <div>
-      <h2>Habits</h2>
-      <table border="1">
-        <thead>
+      <h2 className="font-bold mb-4">Habits</h2>
+      <table className="table-auto border-collapse border border-gray-800">
+        <thead className="bg-gray-400">
           <tr>
-            <th>Habit</th>
+            <th className="border border-gray-800">Habit</th>
             {days.map((d) => (
-              <th key={d}>{d.slice(5)}</th>
+              <th key={d} className="w-4 border border-gray-800">{d.slice(5)}</th>
             ))}
-            <th>Description</th>
-            <th>Actions</th>
+            <th className="px-2 py-1 border border-gray-800">Description</th>
+            <th className="px-2 py-1 border border-gray-800">Actions</th>
           </tr>
         </thead>
         <tbody>
           {habits.map((h) => (
             <tr key={h.id}>
-              <td>{h.name}</td>
+              <td className="px-3 border border-gray-800">{h.name}</td>
               {days.map((d) => {
                 const completed = logs[h.id]?.[d] || false;
                 return (
                   <td
+                    className="px-3 border border-gray-800"
                     key={d}
                     style={{
                       cursor: "pointer",
@@ -84,10 +85,10 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
                   </td>
                 );
               })}
-              <td>{h.description}</td>
-              <td>
-                <button onClick={() => updateHabit(h)}>Edit</button>
-                <button onClick={() => onDelete(h.id)}>Delete</button>
+              <td className="px-3 border border-gray-800">{h.description}</td>
+              <td className="px-3 border border-gray-800">
+                <button onClick={() => updateHabit(h)}className="px-1 border border-gray-800 bg-gray-400">Edit</button>
+                <button onClick={() => onDelete(h.id)}className="px-1 border border-gray-800 bg-red-500">Delete</button>
               </td>
             </tr>
           ))}

@@ -49,7 +49,7 @@ function App(props) {
 
   return (
     <>
-      <h1>Welcome to Habit Grid {props.user}</h1>
+      <h1 className="font-bold">Welcome to Habit Grid {props.user}</h1>
       <p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>
 
       <HabitList habits={habits} updateHabit={openEditModal} updateCallback={onUpdate} />
