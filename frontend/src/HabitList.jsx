@@ -74,13 +74,13 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
                     key={d}
                     style={{
                       cursor: "pointer",
-                      backgroundColor: completed ? "lightgreen" : "lightgray",
+                      backgroundColor: completed ? "#4bff5aff" : "lightgray",
                       textAlign: "center",
                       width: "40px",
                     }}
                     onClick={() => toggleComplete(h.id, d, completed)}
                   >
-                    {completed ? "✓" : ""}
+                    {completed ? "✅" : ""}
                   </td>
                 );
               })}

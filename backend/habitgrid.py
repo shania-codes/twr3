@@ -103,7 +103,7 @@ def delete_habit(habit_id):
     habit = Habits.query.get(habit_id)
 
     if not habit:
-        return jsonify({"message": "User not found"}), 404 # Not found
+        return jsonify({"message": "Habit not found"}), 404 # Not found
 
     db.session.delete(habit)
     db.session.commit()
@@ -112,9 +112,6 @@ def delete_habit(habit_id):
 
 
 ## Habit completion status
-### Create?
-
-### Read
 @app.route("/api/get_habit_logs")
 def get_habit_logs():
     today = date.today()
@@ -127,8 +124,7 @@ def get_habit_logs():
 
     return jsonify({"logs": logs_by_habit})
 
-### Update
-#### Mark habit as complete for a certain day
+### Mark habit as complete for a certain day
 @app.route("/api/complete_habit", methods=["POST"])
 def complete_habit():
     data = request.json
@@ -136,30 +132,17 @@ def complete_habit():
     date_str = data.get("date")
     completed = data.get("completed", True)
 
-    if not (habit_id and date):
+    if not (habit_id and date_str):
         return jsonify({"message":"Select a habit and a date."}), 400 # Bad request
 
     parsed_date = date.fromisoformat(date_str)
-    log = HabitLog.query.filter_by(habit_id=habit_id, date=parsed_date, completed=completed).first()
+    log = HabitLog.query.filter_by(habit_id=habit_id, date=parsed_date).first()
     
     if not log:
-        log = HabitLog(habit_id=habit_id, date=parsed_date, completed=completed)
+        log = HabitLog(habit_id=habit_id, date=parsed_date)
         db.session.add(log)
-    else:
-        log.completed = completed
+
+    log.completed = completed
 
     db.session.commit()
     return jsonify({"message": "Habit completion status updated"}), 200 # OK
-
-
-### Delete
-
-
-## Template
-### Create
-
-### Read
-
-### Update
-
-### Delete

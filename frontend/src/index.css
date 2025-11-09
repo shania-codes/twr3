@@ -15,7 +15,7 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #34569e;
     margin: 10% auto;
     padding:20px;
     border: 1px solid #888;
@@ -33,4 +33,9 @@
 input, button, label {
     margin-top: 10px;
     margin-right: 10px;
+}
+
+body {
+    background-color: #186888;
+    color: white;
 }
