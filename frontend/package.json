@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite &",
     "build": "vite build",
     "lint": "eslint .",
-    "api": "cd ../backend && venv/bin/flask run --debug",
+    "api": "cd ../backend && venv/bin/flask run --debug &",
     "preview": "vite preview"
   },
   "dependencies": {

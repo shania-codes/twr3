@@ -50,10 +50,10 @@ function App(props) {
   return (
     <>
       <h1 className="font-bold">Welcome to Habit Grid {props.user}</h1>
-      <p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>
+      {/*<p>Time at load: {new Date(currentTime * 1000).toLocaleString()}</p>*/}
 
       <HabitList habits={habits} updateHabit={openEditModal} updateCallback={onUpdate} />
-      <button onClick={openCreateModal}>Create New Habit</button>
+      <button onClick={openCreateModal} className="px-4 py-2 bg-green-500 text-white rounded font-bold hover:bg-green-600 hover:opacity-90 transition">Create New Habit</button>
 
       { isModalOpen && <div className="modal">
         <div className="modal-content">
@@ -63,20 +63,6 @@ function App(props) {
       </div>
       }
 
-      
-
-      {/* TWR Dashboard for all "apps" */}
-      {/* <dashboard>
-        <featurebutton className=""> 
-          <img src="./public/habits.png"></img>Habits
-        </featurebutton>
-        <featurebutton> 
-          <img src="./public/charts.jpg"></img>Stats
-        </featurebutton>
-        <featurebutton> 
-          <img src="./public/settings.png"></img>Settings
-        </featurebutton>
-      </dashboard> */}
 
     </>
   )

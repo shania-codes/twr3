@@ -31,13 +31,13 @@ const HabitForm = ({existingHabit = {}, updateCallback}) => {
     return <form onSubmit={onSubmit}>
         <div>
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}></input>   
+            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}  className="px-3 py-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"></input>   
         </div>
         <div>
             <label htmlFor="description">Description:</label>
-            <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></input>   
+            <input type="text" id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="px-3 py-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"></input>   
         </div>
-        <button type="submit">{updating ? "Update Habit" : "Create Habit"}</button>
+        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded font-bold hover:bg-blue-600 hover:opacity-90 transition">{updating ? "Update Habit" : "Create Habit"}</button>
     </form>
 
 }

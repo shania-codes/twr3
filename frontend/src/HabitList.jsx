@@ -52,26 +52,26 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
     return (
     <div>
       <h2 className="font-bold mb-4">Habits</h2>
-      <table className="table-auto border-collapse border border-gray-800">
+      <table className="table-auto border-collapse border border-gray-800 w-full table-fixed">
         <thead className="bg-gray-400">
           <tr>
-            <th className="border border-gray-800">Habit</th>
+            <th className="border border-gray-800 th-nowrap w-12">Habit</th>
             {days.map((d) => (
-              <th key={d} className="border border-gray-800">{d.slice(5)}</th>
+              <th key={d} className="border border-gray-800 th-nowrap w-12">{d.slice(5)}</th>
             ))}
-            <th className="px-2 py-1 border border-gray-800">Description</th>
-            <th className="px-2 py-1 border border-gray-800">Actions</th>
+            <th className="border border-gray-800 th-nowrap w-26">Description</th>
+            <th className="py-0.5 border border-gray-800 th-nowrap w-40">Actions</th>
           </tr>
         </thead>
         <tbody>
           {habits.map((h) => (
             <tr key={h.id}>
-              <td className="px-3 border border-gray-800">{h.name}</td>
+              <td className="px-3 border border-gray-800 th-nowrap w-12">{h.name}</td>
               {days.map((d) => {
                 const completed = logs[h.id]?.[d] || false;
                 return (
                   <td
-                    className="px-3 border border-gray-800"
+                    className="px-3 hovergrEy th-nowrap w-12"
                     key={d}
                     style={{
                       cursor: "pointer",
@@ -85,10 +85,10 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
                   </td>
                 );
               })}
-              <td className="px-3 border border-gray-800">{h.description}</td>
-              <td className="px-3 border border-gray-800">
-                <button onClick={() => updateHabit(h)}className="px-1 border border-gray-800 bg-gray-400">Edit</button>
-                <button onClick={() => onDelete(h.id)}className="px-1 border border-gray-800 bg-red-500">Delete</button>
+              <td className="px-3 border border-gray-800 th-nowrap w-12">{h.description}</td>
+              <td className="px-3 border border-gray-800 th-nowrap w-12">
+                <button onClick={() => updateHabit(h)}className="px-3 py-1 border border-gray-800 bg-blue-500 text-white rounded hover:bg-blue-600 hover:opacity-90 transition">Edit</button>
+                <button onClick={() => onDelete(h.id)}className="px-3 py-1 border border-gray-800 bg-red-500 text-white rounded hover:bg-red-600 hover:opacity-90 transition">Delete</button>
               </td>
             </tr>
           ))}
