@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import time
-import sqlite3
+from datetime import datetime, date, timedelta
 
 
 app = Flask(__name__)
@@ -18,6 +18,8 @@ class Habits(db.Model):
     name = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(200))
 
+    logs = db.relationship("HabitLog", backref="habit", lazy=True, cascade="all, delete-orphan")
+
     # lowerCamelCase
     def tojson(self):
         return {
@@ -26,6 +28,20 @@ class Habits(db.Model):
             "description": self.description,
         }
 
+
+class HabitLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    habit_id = db.Column(db.Integer, db.ForeignKey("habits.id"), nullable=False)
+    date = db.Column(db.Date, default=date.today, index=True)
+    completed = db.Column(db.Boolean, default=False)
+
+    def tojson(self):
+        return {
+            "id": self.id,
+            "habitID": self.habit_id,
+            "date": self.date.isoformat(),
+            "completed": self.completed,
+        }
 
 
 with app.app_context():
@@ -71,7 +87,7 @@ def update_habit(habit_id):
     habit = Habits.query.get(habit_id)
 
     if not habit:
-        return jsonify({"message": "User not found"}), 404 # Not found
+        return jsonify({"message": "Habit not found"}), 404 # Not found
 
     data = request.json
     habit.name = data.get("name", habit.name)
@@ -93,6 +109,50 @@ def delete_habit(habit_id):
     db.session.commit()
 
     return jsonify({"message":"Habit deleted"}), 200 # OK
+
+
+## Habit completion status
+### Create?
+
+### Read
+@app.route("/api/get_habit_logs")
+def get_habit_logs():
+    today = date.today()
+    start_date = today - timedelta(days=6)
+    logs = HabitLog.query.filter(HabitLog.date >= start_date).all()
+
+    logs_by_habit = {}
+    for log in logs:
+        logs_by_habit.setdefault(log.habit_id, {})[log.date.isoformat()] = log.completed
+
+    return jsonify({"logs": logs_by_habit})
+
+### Update
+#### Mark habit as complete for a certain day
+@app.route("/api/complete_habit", methods=["POST"])
+def complete_habit():
+    data = request.json
+    habit_id = data.get("habitID")
+    date_str = data.get("date")
+    completed = data.get("completed", True)
+
+    if not (habit_id and date):
+        return jsonify({"message":"Select a habit and a date."}), 400 # Bad request
+
+    parsed_date = date.fromisoformat(date_str)
+    log = HabitLog.query.filter_by(habit_id=habit_id, date=parsed_date, completed=completed).first()
+    
+    if not log:
+        log = HabitLog(habit_id=habit_id, date=parsed_date, completed=completed)
+        db.session.add(log)
+    else:
+        log.completed = completed
+
+    db.session.commit()
+    return jsonify({"message": "Habit completion status updated"}), 200 # OK
+
+
+### Delete
 
 
 ## Template
