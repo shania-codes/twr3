@@ -1,8 +1,4 @@
 backend/venv
 backend/__pycache__
-
-# DB:
 backend/instance
-
-# Temp:
-README.md
+frontend/README.md
