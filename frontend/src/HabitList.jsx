@@ -57,7 +57,7 @@ const HabitList = ({habits, updateHabit, updateCallback}) => {
           <tr>
             <th className="border border-gray-800">Habit</th>
             {days.map((d) => (
-              <th key={d} className="w-4 border border-gray-800">{d.slice(5)}</th>
+              <th key={d} className="border border-gray-800">{d.slice(5)}</th>
             ))}
             <th className="px-2 py-1 border border-gray-800">Description</th>
             <th className="px-2 py-1 border border-gray-800">Actions</th>
